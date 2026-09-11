@@ -1,3 +1,6 @@
+let sun = 200;
+let sunspeed = 1;
+
 function setup() {
   createCanvas(800, 600);
 }
@@ -5,11 +8,16 @@ function setup() {
 function draw() {
   background(135, 206, 250);
 //ZON//
-  fill(200, 170, 0);
-  circle(100, 100, 100);
+  fill(200, 170, 0, 150);
+  circle(sun, 100, 100);
   fill(255, 255, 0);
   strokeWeight(0);
-  circle(100, 100, 80);
+  circle(sun, 100, 80);
+
+  sun = sun + sunspeed;
+  if(sun >= 850) {
+    sun = -50;
+  }
   ///////////
   //bergen//
   //////////
