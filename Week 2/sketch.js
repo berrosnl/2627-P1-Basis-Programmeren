@@ -15,8 +15,15 @@
   let cloud3Speed = 1.2;
 
 // Boom variabelen
-  let boom = 0
-  let boom2 = 0
+  let boom = 0;
+  let boom2 = 0;
+
+// Auto variabelen
+  let auto1 = 0;
+  let auto1Speed = 12;
+
+  let auto2 = 0;
+  let auto2Speed = 12;
 
 
 function setup() {
@@ -192,6 +199,29 @@ function draw() {
   boom = 440 + Math .sin(frameCount * 0.1) * 8;
     fill(36, 169, 87);
     circle(boom, 390, 60);
+
+// Auto's
+  // Auto 1
+  fill(255, 0, 0)
+  rect(-200 + auto1, 480, 100, 60, 10)
+  rect(-120 + auto1, 510, 40, 30, 10)
+
+  fill(0)
+  circle(-180 + auto1, 540, 30)
+  circle(-110 + auto1, 540, 30)
+
+  auto1 = (frameCount * auto1Speed) % 1000
+
+  // Auto 2
+  fill(0, 0, 255)
+  rect(-200 + auto2, 520, 100, 60, 10)
+  rect(-120 + auto2, 550, 40, 30, 10)
+
+  fill(0)
+  circle(-180 + auto2, 580, 30)
+  circle(-110 + auto2, 580, 30)
+
+  auto2 = (frameCount * auto1Speed) % 1000
   
   
 }
