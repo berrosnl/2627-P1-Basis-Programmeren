@@ -37,9 +37,9 @@ function draw() {
 
 if (speler == 1)
   textSize(32);
-  textFont()
+  textFont("Bold Frame.ttf")
   fill(0)
-  text('REDS TURN', 200, 50)
+  text('REDS TURN', 125, 50)
 
 
   fill(0);
