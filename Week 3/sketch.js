@@ -1,5 +1,7 @@
 // Variabelen
 
+let spelAfgelopen = false;
+
 let speler = 1;
 
 // Vakjes
@@ -25,21 +27,30 @@ let vak9 = 0;
 
 function setup() {
   createCanvas(400, 400);
-
+  // dit is de font
   font = loadFont("Bold Frame.ttf")
 }
 
 function draw() {
+  // als rood aan de beurt is wordt de achtergrond rood, en als het blauw is blauw
   if (speler == 1)
-    background(255, 0, 0);
+    background(200, 0, 0);
   else
-    background(0, 0, 255)
+    background(0, 0, 200)
 
-if (speler == 1)
+// als rood aan de beurt is staat er REDS TURN, voor blauw hetzelfde maar dan BLUES TURN  
+if (speler == 1) {
   textSize(32);
   textFont("Bold Frame.ttf")
   fill(0)
-  text('REDS TURN', 125, 50)
+  text('REDS TURN', 120, 50)
+}
+else {
+  textSize(32);
+  textFont("Bold Frame.ttf")
+  fill(0)
+  text('BLUES TURN', 105, 50)
+}
 
 
   fill(0);
@@ -184,6 +195,8 @@ function mousePressed() {
         vak1 = speler;
 
         speler = 3 - speler;
+
+        controleerWinnaar();
       }
     }
 
@@ -197,6 +210,8 @@ function mousePressed() {
         vak2 = speler;
 
         speler = 3 - speler;
+
+        controleerWinnaar();
       }
     }
 
@@ -209,6 +224,8 @@ function mousePressed() {
         vak3 = speler;
 
         speler = 3 - speler;
+
+        controleerWinnaar();
       }
     }
 
@@ -223,6 +240,8 @@ function mousePressed() {
         vak4 = speler;
 
         speler = 3 - speler;
+
+        controleerWinnaar();
       }
     }
 
@@ -236,6 +255,8 @@ function mousePressed() {
         vak5 = speler;
 
         speler = 3 - speler;
+
+        controleerWinnaar();
       }
     }
 
@@ -248,6 +269,8 @@ function mousePressed() {
         vak6 = speler;
 
         speler = 3 - speler;
+
+        controleerWinnaar();
       }
     }
 
@@ -262,6 +285,8 @@ function mousePressed() {
         vak7 = speler;
 
         speler = 3 - speler;
+
+        controleerWinnaar();
       }
     }
 
@@ -275,6 +300,8 @@ function mousePressed() {
         vak8 = speler;
 
         speler = 3 - speler;
+
+        controleerWinnaar();
       }
     }
 
@@ -287,7 +314,52 @@ function mousePressed() {
         vak9 = speler;
 
         speler = 3 - speler;
+
+        controleerWinnaar();
       }
     }
+  }
+}
+
+function controleerWinnaar() {
+
+  // Rij 1
+  if (vak1 != 0 && vak1 == vak2 && vak2 == vak3) {
+    print("Er is een winnaar!");
+  }
+
+  // Rij 2
+  if (vak4 != 0 && vak4 == vak5 && vak5 == vak6) {
+    print("Er is een winnaar!");
+  }
+
+  // Rij 3
+  if (vak7 != 0 && vak7 == vak8 && vak8 == vak9) {
+    print("Er is een winnaar!");
+  }
+
+  // Kolom 1
+  if (vak1 != 0 && vak1 == vak4 && vak4 == vak7) {
+    print("Er is een winnaar!");
+  }
+
+  // Kolom 2
+  if (vak2 != 0 && vak2 == vak5 && vak5 == vak8) {
+    print("Er is een winnaar!");
+  }
+
+  // Kolom 3
+  if (vak3 != 0 && vak3 == vak6 && vak6 == vak9) {
+    print("Er is een winnaar!");
+  }
+
+  // Diagonaal 1
+  if (vak1 != 0 && vak1 == vak5 && vak5 == vak9) {
+    print("Er is een winnaar!");
+  }
+
+  // Diagonaal 2
+  if (vak3 != 0 && vak3 == vak5 && vak5 == vak7) {
+    print("Er is een winnaar!");
   }
 }
