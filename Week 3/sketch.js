@@ -2,6 +2,8 @@
 
 let spelAfgelopen = false;
 
+let winnaar = 0;
+
 let speler = 1;
 
 // Vakjes
@@ -14,6 +16,8 @@ let rijMiddenY = 170;
 let rijOnderY = 250;
 
 let vakjeGrootte = 60;
+
+let vakjeKleur = 150
 
 let vak1 = 0;
 let vak2 = 0;
@@ -38,19 +42,39 @@ function draw() {
   else
     background(0, 0, 200)
 
-// als rood aan de beurt is staat er REDS TURN, voor blauw hetzelfde maar dan BLUES TURN  
-if (speler == 1) {
-  textSize(32);
-  textFont("Bold Frame.ttf")
-  fill(0)
-  text('REDS TURN', 120, 50)
-}
-else {
-  textSize(32);
-  textFont("Bold Frame.ttf")
-  fill(0)
-  text('BLUES TURN', 105, 50)
-}
+
+
+  if (spelAfgelopen) {
+    background(200)
+    textSize(32);
+    textFont("Bold Frame.ttf");
+
+    if (winnaar == 1) {
+      fill(255, 0, 0);
+      text("RED WON!", 125, 50);
+    }
+    else if (winnaar == 2) {
+      fill(0, 0, 255);
+      text("BLUE WON!", 125, 50);
+    }
+
+  }
+  else if (speler == 1) {
+
+    textSize(32);
+    textFont("Bold Frame.ttf");
+    fill(0);
+    text("REDS TURN", 120, 50);
+
+  }
+  else {
+
+    textSize(32);
+    textFont("Bold Frame.ttf");
+    fill(0);
+    text("BLUES TURN", 105, 50);
+
+  }
 
 
   fill(0);
@@ -68,7 +92,7 @@ else {
     fill("blue")
   }
   else {
-    fill(200)
+    fill(vakjeKleur)
   }
   rect(rijLinksX, rijBovenY, vakjeGrootte, vakjeGrootte, 10); // 1
 
@@ -80,7 +104,7 @@ else {
     fill("blue")
   }
   else {
-    fill(200)
+    fill(vakjeKleur)
   }
   rect(rijMiddenX, rijBovenY, vakjeGrootte, vakjeGrootte, 10); // 2
 
@@ -92,7 +116,7 @@ else {
     fill("blue")
   }
   else {
-    fill(200)
+    fill(vakjeKleur)
   }
   rect(rijRechtsX, rijBovenY, vakjeGrootte, vakjeGrootte, 10); // 3
 
@@ -107,7 +131,7 @@ else {
     fill("blue")
   }
   else {
-    fill(200)
+    fill(vakjeKleur)
   }
   rect(rijLinksX, rijMiddenY, vakjeGrootte, vakjeGrootte, 10); // 4
 
@@ -120,7 +144,7 @@ else {
     fill("blue")
   }
   else {
-    fill(200)
+    fill(vakjeKleur)
   }
   rect(rijMiddenX, rijMiddenY, vakjeGrootte, vakjeGrootte, 10); // 5
 
@@ -133,7 +157,7 @@ else {
     fill("blue")
   }
   else {
-    fill(200)
+    fill(vakjeKleur)
   }
   rect(rijRechtsX, rijMiddenY, vakjeGrootte, vakjeGrootte, 10); // 6
 
@@ -150,7 +174,7 @@ else {
     fill("blue")
   }
   else {
-    fill(200)
+    fill(vakjeKleur)
   }
   rect(rijLinksX, rijOnderY, vakjeGrootte, vakjeGrootte, 10); // 7
 
@@ -163,7 +187,7 @@ else {
     fill("blue")
   }
   else {
-    fill(200)
+    fill(vakjeKleur)
   }
   rect(rijMiddenX, rijOnderY, vakjeGrootte, vakjeGrootte, 10); // 8
 
@@ -176,14 +200,16 @@ else {
     fill("blue")
   }
   else {
-    fill(200)
+    fill(vakjeKleur)
   }
   rect(rijRechtsX, rijOnderY, vakjeGrootte, vakjeGrootte, 10); // 9  
 }
 
 function mousePressed() {
   if (mouseButton == "left") {
-
+    if (spelAfgelopen) {
+      return;
+    }
 
     // Rij 1 
     // vakje 1, linksboven
@@ -319,47 +345,60 @@ function mousePressed() {
       }
     }
   }
-}
 
-function controleerWinnaar() {
 
-  // Rij 1
-  if (vak1 != 0 && vak1 == vak2 && vak2 == vak3) {
-    print("Er is een winnaar!");
-  }
+  function controleerWinnaar() {
 
-  // Rij 2
-  if (vak4 != 0 && vak4 == vak5 && vak5 == vak6) {
-    print("Er is een winnaar!");
-  }
+    if (spelAfgelopen) {
+      return;
+    }
 
-  // Rij 3
-  if (vak7 != 0 && vak7 == vak8 && vak8 == vak9) {
-    print("Er is een winnaar!");
-  }
+    // Rij 1
+    if (vak1 != 0 && vak1 == vak2 && vak2 == vak3) {
+      winnaar = vak1;
+      spelAfgelopen = true;
+    }
 
-  // Kolom 1
-  if (vak1 != 0 && vak1 == vak4 && vak4 == vak7) {
-    print("Er is een winnaar!");
-  }
+    // Rij 2
+    if (vak4 != 0 && vak4 == vak5 && vak5 == vak6) {
+      winnaar = vak4;
+      spelAfgelopen = true;
+    }
 
-  // Kolom 2
-  if (vak2 != 0 && vak2 == vak5 && vak5 == vak8) {
-    print("Er is een winnaar!");
-  }
+    // Rij 3
+    if (vak7 != 0 && vak7 == vak8 && vak8 == vak9) {
+      winnaar = vak7;
+      spelAfgelopen = true;
+    }
 
-  // Kolom 3
-  if (vak3 != 0 && vak3 == vak6 && vak6 == vak9) {
-    print("Er is een winnaar!");
-  }
+    // Kolom 1
+    if (vak1 != 0 && vak1 == vak4 && vak4 == vak7) {
+      winnaar = vak1;
+      spelAfgelopen = true;
+    }
 
-  // Diagonaal 1
-  if (vak1 != 0 && vak1 == vak5 && vak5 == vak9) {
-    print("Er is een winnaar!");
-  }
+    // Kolom 2
+    if (vak2 != 0 && vak2 == vak5 && vak5 == vak8) {
+      winnaar = vak2;
+      spelAfgelopen = true;
+    }
 
-  // Diagonaal 2
-  if (vak3 != 0 && vak3 == vak5 && vak5 == vak7) {
-    print("Er is een winnaar!");
+    // Kolom 3
+    if (vak3 != 0 && vak3 == vak6 && vak6 == vak9) {
+      winnaar = vak3;
+      spelAfgelopen = true;
+    }
+
+    // Diagonaal 1
+    if (vak1 != 0 && vak1 == vak5 && vak5 == vak9) {
+      winnaar = vak1;
+      spelAfgelopen = true;
+    }
+
+    // Diagonaal 2
+    if (vak3 != 0 && vak3 == vak5 && vak5 == vak7) {
+      winnaar = vak3;
+      spelAfgelopen = true;
+    }
   }
 }
