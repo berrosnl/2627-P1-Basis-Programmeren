@@ -1,86 +1,142 @@
-// Arrays voor de vormen
-let x = [];
-let y = [];
-let grootte = [];
-let rood = [];
-let groen = [];
-let blauw = [];
-let vorm = [];
-let snelheid = [];
+// Arrays
+let vormen = [];
+let kleuren = [];
+
+// Vormen
+let aantalVormen;
+
+
 
 function setup() {
   createCanvas(800, 600);
 
-  // Eerste kunstwerk maken
-  maakKunst();
+  genereerKunst();
 }
 
 function draw() {
-  background(240);
+  background(28, 3, 51);
 
-  // Alle vormen tekenen
-  for (let i = 0; i < x.length; i++) {
 
-    fill(rood[i], groen[i], blauw[i], 180);
-    noStroke();
+  // Alle vormen maken
+  for (let i = 0; i < vormen.length; i++) {
 
-    // Vierkant of cirkel tekenen
-    if (vorm[i] == 0) {
-      rect(x[i], y[i], grootte[i], grootte[i]);
-    } else {
-      circle(x[i], y[i], grootte[i]);
-    }
+    let vorm = vormen[i];
 
     // Beweging
-    y[i] += snelheid[i];
+    vorm.x += vorm.snelheidX;
+    vorm.y += vorm.snelheidY;
 
-    // Terug naar boven als de vorm uit beeld is
-    if (y[i] > height) {
-      y[i] = 0;
+    // Als een vorm buiten beeld gaat verschijnt hij aan de andere kant
+    if (vorm.x > width + vorm.grootte) {
+      vorm.x = -vorm.grootte;
+    }
+
+    if (vorm.x < -vorm.grootte) {
+      vorm.x = width + vorm.grootte;
+    }
+
+    if (vorm.y > height + vorm.grootte) {
+      vorm.y = -vorm.grootte;
+    }
+
+    if (vorm.y < -vorm.grootte) {
+      vorm.y = height + vorm.grootte;
+    }
+
+    // Kleur van de vorm
+    fill(vorm.kleur);
+    stroke(10);
+    strokeWeight(4);
+
+    // Verschillende soorten vormen
+    if (vorm.type === "cirkel") {
+      ellipse(vorm.x, vorm.y, vorm.grootte, vorm.grootte);
+
+    } else if (vorm.type === "vierkant") {
+      push();
+      translate(vorm.x, vorm.y);
+      rotate(vorm.hoek);
+      rectMode(CENTER);
+      rect(0, 0, vorm.grootte, vorm.grootte);
+      pop();
+
+    } else if (vorm.type === "driehoek") {
+      push();
+      translate(vorm.x, vorm.y);
+      rotate(vorm.hoek);
+
+      triangle(
+        -vorm.grootte / 2,
+        vorm.grootte / 2,
+        0,
+        -vorm.grootte / 2,
+        vorm.grootte / 2,
+        vorm.grootte / 2
+      );
+
+      pop();
     }
   }
-
-  // Tekst onderaan
-  fill(0);
-  textSize(18);
-  text("Druk op BACKSPACE voor nieuwe kunst", 20, height - 20);
 }
 
-// Nieuwe kunst maken
-function maakKunst() {
 
-  // Arrays leegmaken
-  x = [];
-  y = [];
-  grootte = [];
-  rood = [];
-  groen = [];
-  blauw = [];
-  vorm = [];
-  snelheid = [];
+
+function genereerKunst() {
+
+  // Oude vormen verwijderen
+  vormen = [];
 
   // Willekeurig aantal vormen
-  let aantal = floor(random(30, 81));
+  aantalVormen = int(random(12, 30));
 
-  // Gegevens opslaan in arrays
-  for (let i = 0; i < aantal; i++) {
-    x.push(random(width));
-    y.push(random(height));
-    grootte.push(random(20, 80));
+  // Kleuren voor de kunst
+  kleuren = [
+    color(255, 0, 150),
+    color(0, 220, 255),
+    color(255, 120, 0),
+    color(100, 50, 255),
+    color(150, 255, 50),
+    color(255, 50, 50),
+    color(255, 220, 0)
+  ];
 
-    rood.push(random(255));
-    groen.push(random(255));
-    blauw.push(random(255));
+  // Nieuwe vormen maken
+  for (let i = 0; i < aantalVormen; i++) {
 
-    vorm.push(floor(random(2))); // 0 = vierkant, 1 = cirkel
-    snelheid.push(random(0.5, 3));
+    let nieuweVorm = {
+
+      // Willekeurige positie
+      x: random(width),
+      y: random(height),
+
+      // Willekeurige grootte
+      grootte: random(30, 130),
+
+      // Willekeurige snelheid
+      snelheidX: random(-1.5, 1.5),
+      snelheidY: random(-1.5, 1.5),
+
+      // Willekeurige rotatie
+      hoek: random(TWO_PI),
+
+      // Willekeurige kleur
+      kleur: random(kleuren),
+
+      // Willekeurige vorm
+      type: random(["cirkel", "vierkant", "driehoek"])
+    };
+
+    // Vorm toevoegen aan de array
+    vormen.push(nieuweVorm);
   }
 }
 
-// Backspace maakt nieuwe kunst
+
+
 function keyPressed() {
+
+  // Backspace randomized het
   if (keyCode === BACKSPACE) {
-    maakKunst();
-    return false;
+    genereerKunst();
   }
 }
